@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prompts reutilizables de Vibe Coding — copia, rellena los corchetes con tu idea, pega.">
+<meta name="robots" content="noindex">
+<title>Arsenal Vibe Coding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F2F5F3; --surface:#FFFFFF; --surface-2:#F7F9F8;
+    --ink:#15201E; --muted:#586764; --faint:#8A9793;
+    --accent:#B4530A; --accent-soft:#F4E4D3;
+    --teal:#0E6E63; --teal-soft:#DDEDEA;
+    --line:#E2E7E4; --line-strong:#CBD4D0;
+    --code-bg:#12201D; --code-ink:#E9F0EE; --code-slot:#F0A85A; --code-line:#25352F;
+    --shadow:0 1px 2px rgba(20,32,30,.04),0 8px 24px -12px rgba(20,32,30,.12);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0C1211; --surface:#141D1B; --surface-2:#101816;
+      --ink:#ECF1EF; --muted:#95A5A0; --faint:#6B7A76;
+      --accent:#E8973B; --accent-soft:#33251A;
+      --teal:#3FBFAF; --teal-soft:#132A27;
+      --line:#22302C; --line-strong:#2E3F3A;
+      --code-bg:#0A100F; --code-ink:#E9F0EE; --code-slot:#F0A85A; --code-line:#1E2C28;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -14px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0C1211; --surface:#141D1B; --surface-2:#101816;
+    --ink:#ECF1EF; --muted:#95A5A0; --faint:#6B7A76;
+    --accent:#E8973B; --accent-soft:#33251A;
+    --teal:#3FBFAF; --teal-soft:#132A27;
+    --line:#22302C; --line-strong:#2E3F3A;
+    --code-bg:#0A100F; --code-ink:#E9F0EE; --code-slot:#F0A85A; --code-line:#1E2C28;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -14px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:clamp(20px,5vw,64px) clamp(16px,4vw,32px) 96px}
+
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace; font-size:12px; font-weight:500;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:""; width:26px; height:2px; background:var(--accent); display:inline-block}
+  h1{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:800;
+    font-size:clamp(34px,7vw,60px); line-height:1.02; letter-spacing:-.02em;
+    margin:0 0 20px; text-wrap:balance;
+  }
+  h1 .hl{color:var(--accent)}
+  .lede{font-size:clamp(16px,2.2vw,19px); color:var(--muted); max-width:60ch; margin:0}
+  .lede strong{color:var(--ink); font-weight:600}
+
+  .how{margin-top:32px; display:flex; flex-wrap:wrap; gap:10px}
+  .how .step{
+    font-family:"JetBrains Mono",monospace; font-size:12.5px; color:var(--muted);
+    background:var(--surface); border:1px solid var(--line); border-radius:999px;
+    padding:7px 14px; display:flex; align-items:center; gap:8px;
+  }
+  .how .num{color:var(--accent); font-weight:700}
+  .slot-key{color:var(--accent); font-weight:700}
+
+  .rule{display:flex; align-items:center; gap:16px; margin:56px 0 28px}
+  .rule::before,.rule::after{content:""; height:1px; background:var(--line); flex:1}
+  .rule span{
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--faint); white-space:nowrap;
+  }
+
+  .frame{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:clamp(20px,3.5vw,32px); box-shadow:var(--shadow);
+  }
+  .frame h2{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:23px;
+    letter-spacing:-.01em; margin:0 0 6px;
+  }
+  .frame .sub{color:var(--muted); font-size:14.5px; margin:0 0 22px}
+  .fields{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden}
+  .field{background:var(--surface); padding:15px 18px; display:grid; grid-template-columns:150px 1fr; gap:16px; align-items:baseline}
+  .field .k{
+    font-family:"JetBrains Mono",monospace; font-size:12px; font-weight:500;
+    letter-spacing:.03em; color:var(--accent); text-transform:uppercase;
+  }
+  .field .v{color:var(--muted); font-size:14.5px}
+  @media(max-width:560px){ .field{grid-template-columns:1fr; gap:4px} }
+  .frame .foot{margin-top:18px; font-size:13.5px; color:var(--muted); display:flex; gap:10px; align-items:flex-start}
+  .frame .foot b{color:var(--ink); font-weight:600}
+
+  .deck{display:flex; flex-direction:column; gap:22px}
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    overflow:hidden; box-shadow:var(--shadow);
+  }
+  .card .head{padding:20px clamp(18px,3vw,26px) 0}
+  .card .tagrow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px}
+  .idx{
+    font-family:"JetBrains Mono",monospace; font-weight:700; font-size:12px;
+    color:var(--accent); background:var(--accent-soft); border-radius:6px;
+    padding:3px 8px; letter-spacing:.05em;
+  }
+  .skill{
+    font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--teal);
+    background:var(--teal-soft); border-radius:6px; padding:3px 8px; letter-spacing:.02em;
+  }
+  .card h3{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:21px;
+    letter-spacing:-.01em; margin:0 0 4px;
+  }
+  .card .when{color:var(--muted); font-size:14px; margin:0 0 16px}
+  .card .when b{color:var(--ink); font-weight:600}
+
+  .block{position:relative; margin:0}
+  .block pre{
+    margin:0; background:var(--code-bg); color:var(--code-ink);
+    font-family:"JetBrains Mono",monospace; font-size:13.5px; line-height:1.72;
+    padding:20px clamp(18px,3vw,26px) 22px; white-space:pre-wrap; word-break:break-word;
+    border-top:1px solid var(--code-line);
+  }
+  .block .slot{
+    color:var(--code-slot); font-weight:700;
+    background:rgba(240,168,90,.12); border-radius:4px; padding:0 3px;
+  }
+  .copy{
+    position:absolute; top:12px; right:12px;
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; font-weight:500;
+    color:var(--code-ink); background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16); border-radius:8px;
+    padding:6px 12px; cursor:pointer; transition:all .15s ease; letter-spacing:.03em;
+  }
+  .copy:hover{background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.28)}
+  .copy:focus-visible{outline:2px solid var(--code-slot); outline-offset:2px}
+  .copy.done{color:#7BE0A3; border-color:rgba(123,224,163,.4); background:rgba(123,224,163,.12)}
+
+  .oneoff{
+    margin-top:26px; background:var(--surface-2); border:1px dashed var(--line-strong);
+    border-radius:14px; padding:20px clamp(18px,3vw,24px);
+  }
+  .oneoff .lab{
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin-bottom:12px;
+  }
+  .oneoff p{margin:0 0 6px; font-size:14px; color:var(--muted)}
+  .oneoff p b{color:var(--ink); font-weight:600}
+
+  .golden{
+    margin-top:48px; border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:12px; background:var(--surface); padding:22px clamp(18px,3vw,26px);
+  }
+  .golden .lab{
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:8px;
+  }
+  .golden p{margin:0; font-size:15.5px; color:var(--ink)}
+  .golden p + p{margin-top:10px; font-size:14px; color:var(--muted)}
+
+  footer{
+    margin-top:40px; padding-top:24px; border-top:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--faint);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Q&amp;A Vibe Coding · 19 ago 2026</div>
+    <h1>El arsenal que Juan<br>se sabe <span class="hl">de memoria</span></h1>
+    <p class="lede">La clase no era sobre AIOS 3.0 — eso es de él. El jugo son <strong>las frases reutilizables que aplica a todo desarrollo</strong>. Aquí están limpias y listas: copias el bloque, rellenas los <span class="slot-key">[corchetes]</span> con tu idea, pegas.</p>
+
+    <div class="how">
+      <span class="step"><span class="num">1</span> Copia el bloque</span>
+      <span class="step"><span class="num">2</span> Rellena los <span class="slot-key">[___]</span></span>
+      <span class="step"><span class="num">3</span> Pega y deja correr</span>
+    </div>
+  </header>
+
+  <div class="rule"><span>Paso 0 · Hablar de la idea de forma estándar</span></div>
+
+  <div class="frame">
+    <h2>El marco antes de teclear</h2>
+    <p class="sub">Juan no improvisa: toma <b>todas</b> las decisiones previas y recién ahí suelta al agente 0→100. Este es el frame que rellenas cada vez, en lenguaje natural.</p>
+    <div class="fields">
+      <div class="field"><span class="k">Qué es</span><span class="v">Caso de uso <b>exacto y específico</b> — no "una web", sino "landing de e-commerce para producto COD".</span></div>
+      <div class="field"><span class="k">Para quién</span><span class="v">Qué vende / a quién / cuál es el resultado observable cuando está listo.</span></div>
+      <div class="field"><span class="k">Decisiones técnicas</span><span class="v">Stack, base de datos, servidor, credenciales. "Úsalas, ya las tienes, ni me preguntes."</span></div>
+      <div class="field"><span class="k">Estilo</span><span class="v">Referencias visuales concretas (ej: forma.co, macOS 26). "Usa el estilo de El Rincón / tu sistema."</span></div>
+      <div class="field"><span class="k">Invariantes</span><span class="v">Qué NO se toca. Todo lo que no nombres es candidato a cambiar sin querer.</span></div>
+    </div>
+    <p class="foot">⚡ <span><b>Esto es la capa de lenguaje natural.</b> El rigor (los 7 bloques del encargo, criterios en rangos, verificación) ya vive en tu skill <b>agent-praxis</b>. El frame lo alimenta.</span></p>
+  </div>
+
+  <div class="rule"><span>Los bloques · copia · rellena · pega</span></div>
+
+  <div class="deck">
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">01</span><span class="skill">↔ brief</span></div>
+        <h3>Traer el estado del arte</h3>
+        <p class="when"><b>Cuándo:</b> antes de construir cualquier cosa nueva — skill, componente, herramienta. El motor casi siempre ya existe afuera.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre>Antes de construir <span class="slot">[___ lo que vas a construir]</span>, hazme una investigación exhaustiva en la web y tráeme el estado del arte (state of the art) de <span class="slot">[___ categoría: skills / repos / herramientas / componentes]</span>. Busca en repos con buenas estrellas y reseñas, videos de YouTube, donde sea. Tráeme solo los mejores candidatos con una base sólida — nada de basura genérica. Si hay un ganador claro, dímelo. Luego instala el mejor, aviéntate un clavado y mejóralo al máximo antes de que lo usemos.</pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">02</span><span class="skill">↔ agent-praxis</span></div>
+        <h3>Encargo autónomo 0→100</h3>
+        <p class="when"><b>Cuándo:</b> en cada implementación. Aunque el system prompt ya lo diga — dilo igual. La IA cada vez pregunta más antes de actuar.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre>Actúa de forma 100% autónoma de 0 a 100. Eres un ingeniero senior experto con +20 años de oficio: exprime todo tu expertise y criterio para tomar cada decisión de <span class="slot">[___ la implementación]</span>. No dejes nada a la ambigüedad. Tú eres el encargado de llevar esto de 0 a 100 — planeación, desarrollo, implementación y verificación. Solo ven a mí cuando sea escalación real: una decisión que solo yo pueda tomar, algo fuera del acuerdo, o una acción destructiva no prevista. Fuera de eso: decides, ejecutas y me entregas.</pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">03</span><span class="skill">↔ agent-praxis · build-with-agent-team</span></div>
+        <h3>Dirigir a varios agentes</h3>
+        <p class="when"><b>Cuándo:</b> feature grande o proyecto de 0 a 100 en paralelo. Tú hablas con un solo director; él dirige al resto.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre>Tú eres el director y project manager de este proyecto. Vas a dirigir a estos <span class="slot">[___ N]</span> desarrolladores senior en paralelo: reparte el trabajo, crea encargos perfectos para cada uno y arma las piezas al final. Asegúrate de que sigan la metodología Praxis (brief → PRP → bucle agéntico). No quiero saber nada de lo que pasa por detrás: los otros agentes no me reportan ni me preguntan a mí — tú te comunicas con ellos. Al final me entregas <span class="slot">[___ la URL / el resultado observable]</span>.</pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">04</span><span class="skill">↔ frontend-design</span></div>
+        <h3>Antigeneric — que no huela a IA</h3>
+        <p class="when"><b>Cuándo:</b> cualquier UI o web. Hay que pedirlo <b>explícito</b>; si no, sale genérica como todas las de IA.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre><span class="slot">[___ la web / UI]</span> NO puede parecer hecha por IA en lo absoluto: ni genérica, ni tipo Figma, ni barata, ni de vibecoder. Quiero que parezca hecha por un web designer con 10+ años de experiencia, de los que contratan las empresas más grandes del mundo. Investiga el estado del arte del diseño para <span class="slot">[___ tipo exacto: landing / e-commerce / dashboard / producto]</span>, tráeme 3-5 estilos de referencia para elegir, y sobre esa base construye. Sorpréndeme con los visuales: nada de solo texto y tarjetas — animaciones, gráficas, mapas conceptuales. Que se sienta viva, premium, minimalista y elegante.</pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">05</span><span class="skill">↔ playwright-cli</span></div>
+        <h3>El agente crítico</h3>
+        <p class="when"><b>Cuándo:</b> último paso antes de darte algo por terminado. "Ya lo terminé" no es una entrega — que se destroce a sí mismo primero.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre>Antes de darme esto por terminado, critícalo como si fueras el peor crítico de la historia. Ponte en mis zapatos y revisa <span class="slot">[___ la web / la herramienta / el creativo]</span>: interfaz, jerarquía visual, forma de usarse, y cualquier bug por mínimo o tonto que parezca. Sé implacable con tu propio resultado. Lista todo lo que está mal y cómo mejorarlo, arréglalo, y solo entonces me lo entregas.
+
+Extra: que un segundo agente revise las correcciones del crítico y decida si valen la pena antes de aplicarlas.</pre>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head">
+        <div class="tagrow"><span class="idx">06</span><span class="skill">↔ build-with-agent-team</span></div>
+        <h3>Pipeline por etapas (vibe directing)</h3>
+        <p class="when"><b>Cuándo:</b> producción de contenido, video, anuncios. Un director + subagentes por etapa. Primero entiende el proceso, luego lo diseñas.</p>
+      </div>
+      <div class="block">
+        <button class="copy">Copiar</button>
+        <pre>Vamos a diseñar un flujo por etapas para <span class="slot">[___ objetivo: crear anuncios / videos / contenido]</span>. Primero explícame cómo funciona el proceso real de <span class="slot">[___ dominio]</span> de punta a punta. Con ese contexto, diseña un flujo super optimizado pensado en hiperproductividad extrema: un agente director que coordina subagentes, uno por etapa (idea → guion → editorial → audiovisual → publicación). Mientras menos agentes, mejor. Antes de comprometernos con <span class="slot">[___ herramienta / API]</span>, investiga y asegúrate de que de verdad sirve para lo que quiero — no te vayas con la finta.</pre>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="oneoff">
+    <div class="lab">Config una sola vez</div>
+    <p><b>Bypass permissions por default.</b> "Configúrate para que todas tus sesiones abran en bypass permissions, y revisa qué permisos de escritura te faltan en los settings para no pedirme confirmación en cosas rutinarias (crear PRPs, cambiar estados, editar archivos)."</p>
+    <p><b>Tarea de diseño = mente fresca.</b> Las tareas creativas de diseño, hazlas por la mañana. Sale mejor.</p>
+  </div>
+
+  <div class="golden">
+    <div class="lab">La regla que amarra todo</div>
+    <p>La herramienta es para el <b>agente</b>, no para ti. Grafos, memoria, skills, subagentes — nada de eso lo operas tú.</p>
+    <p>Tú hablas en lenguaje natural, rellenas el <span class="slot-key">[___]</span> con tu idea, y el agente ejecuta. El "subagente" no es magia: es un llamado a la API con un prompt muy específico. El resultado se gana o se pierde en ese prompt — por eso este arsenal.</p>
+  </div>
+
+  <footer>
+    <span>Arsenal Vibe Coding</span>
+    <span>Nicola Tesla · AIOS</span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var pre = btn.parentElement.querySelector("pre");
+      var text = pre.innerText;
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent;
+        btn.textContent = "✓ Copiado";
+        btn.classList.add("done");
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove("done"); }, 1600);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
